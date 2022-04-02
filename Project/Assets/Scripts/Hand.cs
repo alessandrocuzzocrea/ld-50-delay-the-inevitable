@@ -5,6 +5,7 @@ using UnityEngine;
 public class Hand : MonoBehaviour
 {
     public float rotateSpeed;
+    public float maxRotateSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +16,14 @@ public class Hand : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.RotateAround(transform.parent.position, new Vector3(0, 0, 1), rotateSpeed * Time.deltaTime);
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            transform.RotateAround(transform.parent.position, new Vector3(0, 0, 1), rotateSpeed * Time.deltaTime);
+
+        } else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            transform.RotateAround(transform.parent.position, new Vector3(0, 0, 1), -1 * rotateSpeed * Time.deltaTime);
+
+        }
     }
 }
