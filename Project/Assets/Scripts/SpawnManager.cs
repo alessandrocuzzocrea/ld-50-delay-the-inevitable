@@ -1,21 +1,17 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-public class Head : MonoBehaviour
+public class SpawnManager : MonoBehaviour
 {
-    public float timeoutDuration;
+    public GameObject[] heads;
     public float timeout;
-    public GameObject blow;
+    public float timeoutDuration;
 
     // Start is called before the first frame update
     void Start()
     {
-        timeoutDuration = Random.Range(1, 4);
-
-        timeout = 0;
+        DeactivateAll();
     }
 
     // Update is called once per frame
@@ -33,14 +29,24 @@ public class Head : MonoBehaviour
         // this is reached when timeout gets <= 0
 
         // Spawn object once
-        Spawn();
+        DoStuff();
 
         // Reset timer
         timeout = timeoutDuration;
     }
 
-    private void Spawn()
+    void DoStuff()
     {
-        Instantiate(blow, transform.position, Quaternion.identity);
+        DeactivateAll();
+        GameObject rndHead = heads[Random.Range(0, heads.Length)];
+        rndHead.SetActive(true);
+    }
+
+    void DeactivateAll()
+    {
+        foreach (GameObject head in heads)
+        {
+            head.SetActive(false);
+        }
     }
 }
