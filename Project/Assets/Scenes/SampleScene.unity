@@ -525,6 +525,7 @@ MonoBehaviour:
   DoubleHands: {fileID: 728865475}
   RestoreCandle: {fileID: 1259065320}
   music: {fileID: 0}
+  impact: {fileID: 8300000, guid: 0418d37e3ddcd487d913321edd5017fe, type: 3}
 --- !u!4 &330803295
 Transform:
   m_ObjectHideFlags: 0

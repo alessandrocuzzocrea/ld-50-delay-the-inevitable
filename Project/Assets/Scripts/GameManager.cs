@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
 
     //Audio
     public AudioSource music;
+    public AudioClip impact;
 
     // Start is called before the first frame update
     void Start()
@@ -212,6 +213,7 @@ public class GameManager : MonoBehaviour
         PressEnter.GetComponent<TMPro.TextMeshProUGUI>().text = "Press Enter to restart";
 
         music.Stop();
+        music.PlayOneShot(impact);
     }
 
     public bool Power0Ready()
