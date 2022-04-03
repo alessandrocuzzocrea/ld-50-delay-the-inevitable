@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Flame : MonoBehaviour
+public class Flare : MonoBehaviour
 {
     public float[] rndValues;
     public float timer;
@@ -20,7 +20,7 @@ public class Flame : MonoBehaviour
         if (timer <= 0.0f)
         {
             Vector3 newScale = transform.localScale;
-            newScale.y = rndValues[Random.Range(0, rndValues.Length)];
+            newScale.x = newScale.y = newScale.z = rndValues[Random.Range(0, rndValues.Length)];
             transform.localScale = newScale;
 
             timer = 0.1f;

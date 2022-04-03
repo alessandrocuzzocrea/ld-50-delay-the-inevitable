@@ -9,6 +9,9 @@ public class Head : MonoBehaviour
     public float timeoutDuration;
     public float timeout;
     public GameObject blow;
+    public GameObject skull;
+    public GameObject jaw;
+
 
     void Start()
     {
@@ -34,6 +37,26 @@ public class Head : MonoBehaviour
 
     private void Spawn()
     {
-        Instantiate(blow, transform.position, Quaternion.identity);
+        OpenJaw();
+        GameObject newBlow = Instantiate(blow, transform.position, Quaternion.identity);
+        Vector3 newScale = newBlow.transform.localScale;
+        newScale.x = transform.localScale.x;
+        newBlow.transform.localScale = newScale;
+    }
+
+    public void OpenJaw()
+    {
+        //Quaternion newRot = jaw.transform.localRotation;
+        skull.GetComponent<SpriteRenderer>().color = Color.magenta;
+        jaw.GetComponent<SpriteRenderer>().color = Color.magenta;
+        jaw.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, -24.0f);
+    }
+
+    public void CloseJaw()
+    {
+        //Quaternion newRot = jaw.transform.localRotation;
+        skull.GetComponent<SpriteRenderer>().color = Color.gray;
+        jaw.GetComponent<SpriteRenderer>().color = Color.gray;
+        jaw.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
     }
 }

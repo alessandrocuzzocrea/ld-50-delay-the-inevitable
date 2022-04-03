@@ -20,7 +20,6 @@ public class SpawnManager : MonoBehaviour
     public GameObject[] heads_pattern1_d;
     public GameObject[] heads_pattern1_e;
 
-
     public float timeout;
     public float timeoutDuration;
 
@@ -33,11 +32,19 @@ public class SpawnManager : MonoBehaviour
 
     void Start()
     {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         DeactivateAll();
     }
 
     void Update()
     {
+
+        if (gameManager.gameStarted == false && gameManager.gameEnded == false)
+        {
+            return;
+        }
+
+        Debug.Log("spawnManage");
 
         timeout -= Time.deltaTime;
         pattern0_timeout -= Time.deltaTime;
@@ -85,6 +92,7 @@ public class SpawnManager : MonoBehaviour
     {
         DeactivateAll();
         GameObject rndHead = heads[Random.Range(0, heads.Length)];
+        rndHead.GetComponent<Head>().CloseJaw();
         ActivateWithTimeout(rndHead, 0.5f);
     }
 
@@ -126,8 +134,6 @@ public class SpawnManager : MonoBehaviour
             default:
                 return heads_pattern1_e;
         }
-
-        //return heads_pattern1_a;
     }
 
     void DoPattern1(GameObject[] headz)
@@ -136,8 +142,6 @@ public class SpawnManager : MonoBehaviour
         ActivateWithTimeout(headz[0], 0.5f);
         ActivateWithTimeout(headz[1], 0.5f);
     }
-
-
 
     void DeactivateAll()
     {
