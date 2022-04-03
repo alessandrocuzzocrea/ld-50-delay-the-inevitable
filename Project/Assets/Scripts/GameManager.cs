@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -28,6 +30,9 @@ public class GameManager : MonoBehaviour
     public GameObject Score;
     public GameObject Controls;
 
+    public GameObject SwapHandsUI;
+    public GameObject DoubleHands;
+    public GameObject RestoreCandle;
 
     // Start is called before the first frame update
     void Start()
@@ -45,8 +50,18 @@ public class GameManager : MonoBehaviour
                 gameStarted = true;
                 PressEnter.SetActive(false);
                 Title.SetActive(false);
-                Controls.SetActive(false);
+                //Controls.SetActive(false);
                 Score.SetActive(true);
+            }
+
+            return;
+        }
+
+        if (gameStarted == true && gameEnded == true)
+        {
+            if (Input.GetKey(KeyCode.Return))
+            {
+                SceneManager.LoadScene(0);
             }
 
             return;
@@ -107,8 +122,89 @@ public class GameManager : MonoBehaviour
                 otherHand.GetComponent<BoxCollider2D>().enabled = false;
             }
 
-            Score.GetComponent<TMPro.TextMeshProUGUI>().text = timer.ToString("F3");
+            UpdateGUI();
+            
         }
+    }
+
+    private void UpdateGUI()
+    {
+        Score.GetComponent<TMPro.TextMeshProUGUI>().text = timer.ToString("F3");
+
+        //public GameObject SwapHands;
+        if (power0_cooldown > 0.0f)
+        {
+            TMPro.TextMeshProUGUI t = SwapHandsUI.GetComponent<TMPro.TextMeshProUGUI>();
+            t.text = string.Format("Q -> Cooldown: {0}", power0_cooldown.ToString("F2"));
+            Color c = t.color;
+            c.a = 0.5f;
+            t.color = c;
+        }
+        else
+        {
+            TMPro.TextMeshProUGUI t = SwapHandsUI.GetComponent<TMPro.TextMeshProUGUI>();
+            t.text = string.Format("Q -> Swap Hand");
+            Color c = t.color;
+            c.a = 1.0f;
+            t.color = c;
+        }
+
+        //public GameObject DoubleHands;
+        if (power1_cooldown > 0.0f)
+        {
+            TMPro.TextMeshProUGUI t = DoubleHands.GetComponent<TMPro.TextMeshProUGUI>();
+            t.text = string.Format("W -> Cooldown: {0}", power1_cooldown.ToString("F2"));
+            Color c = t.color;
+            c.a = 0.5f;
+            t.color = c;
+        }
+        else
+        {
+            TMPro.TextMeshProUGUI t = DoubleHands.GetComponent<TMPro.TextMeshProUGUI>();
+            t.text = string.Format("W -> Double Hands");
+            Color c = t.color;
+            c.a = 1.0f;
+            t.color = c;
+        }
+
+        //public GameObject RestoreCandle;
+        if (power2_cooldown > 0.0f)
+        {
+            TMPro.TextMeshProUGUI t = RestoreCandle.GetComponent<TMPro.TextMeshProUGUI>();
+            t.text = string.Format("E -> Cooldown: {0}", power2_cooldown.ToString("F2"));
+            Color c = t.color;
+            c.a = 0.5f;
+            t.color = c;
+        }
+        else
+        {
+            TMPro.TextMeshProUGUI t = RestoreCandle.GetComponent<TMPro.TextMeshProUGUI>();
+            t.text = string.Format("E -> Restore Candle");
+            Color c = t.color;
+            c.a = 1.0f;
+            t.color = c;
+        }
+    }
+
+    internal void InitiateGameOver()
+    {
+        gameEnded = true;
+        GameObject.Find("SpawnManager").SetActive(false);
+        Blow[] blows = GameObject.FindObjectsOfType<Blow>();
+        foreach(Blow blow in blows)
+        {
+            blow.gameObject.SetActive(false);
+        }
+        GameObject.Find("FlareSprite").SetActive(false);
+        GameObject.Find("FlameSprite").SetActive(false);
+
+        GameObject.Find("Candle").GetComponent<Candle>().enabled = false;
+
+        Title.gameObject.SetActive(true);
+        Title.GetComponent<TMPro.TextMeshProUGUI>().text = "Game Over";
+
+        PressEnter.gameObject.SetActive(true);
+        PressEnter.GetComponent<TMPro.TextMeshProUGUI>().text = "Press Enter to restart";
     }
 
     public bool Power0Ready()
@@ -133,12 +229,11 @@ public class GameManager : MonoBehaviour
         otherHand = swap;
     }
 
-    private void OnGUI()
-    {
-
-        GUI.Label(new Rect(10, 20, 1000, 90), string.Format("Seconds: {0}", timer));
-        GUI.Label(new Rect(10, 30, 1000, 90), string.Format("Power 0: Cooldown:{0}", power0_cooldown));
-        GUI.Label(new Rect(10, 40, 1000, 90), string.Format("Power 1: Cooldown:{0} - Duration:{1}", power1_cooldown, power1_duration));
-        GUI.Label(new Rect(10, 50, 1000, 90), string.Format("Power 2: Cooldown:{0}", power2_cooldown));
-    }
+    //private void OnGUI()
+    //{
+    //    GUI.Label(new Rect(10, 20, 1000, 90), string.Format("Seconds: {0}", timer));
+    //    GUI.Label(new Rect(10, 30, 1000, 90), string.Format("Power 0: Cooldown:{0}", power0_cooldown));
+    //    GUI.Label(new Rect(10, 40, 1000, 90), string.Format("Power 1: Cooldown:{0} - Duration:{1}", power1_cooldown, power1_duration));
+    //    GUI.Label(new Rect(10, 50, 1000, 90), string.Format("Power 2: Cooldown:{0}", power2_cooldown));
+    //}
 }

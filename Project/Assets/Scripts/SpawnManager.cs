@@ -44,7 +44,7 @@ public class SpawnManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("spawnManage");
+        //Debug.Log("spawnManage");
 
         timeout -= Time.deltaTime;
         pattern0_timeout -= Time.deltaTime;
@@ -56,7 +56,7 @@ public class SpawnManager : MonoBehaviour
 
             if (pattern1_timeout < 0.0f && rounds >= 10)
             {
-                Debug.Log("pattern1");
+                //Debug.Log("pattern1");
                 GameObject[] randomPattern1 = SelectRndPattern1();
                 DoPattern1(randomPattern1);
                 pattern1_timeout = pattern1_timeoutDuration;
@@ -64,7 +64,7 @@ public class SpawnManager : MonoBehaviour
             }
             else if (pattern0_timeout < 0.0f && rounds >= 10)
             {
-                Debug.Log("pattern0");
+                //Debug.Log("pattern0");
                 GameObject[] randomPattern0 = SelectRndPattern0();
                 DoPattern0(randomPattern0);
                 pattern0_timeout = pattern0_timeoutDuration;
@@ -73,7 +73,7 @@ public class SpawnManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("reg pattern");
+                //Debug.Log("reg pattern");
                 DoStuff();
                 timeout = timeoutDuration;
             }

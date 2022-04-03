@@ -25,6 +25,12 @@ public class Blow : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         //Debug.Log("OnCollisionEnter2D");
-        Destroy(this.gameObject);
+        if (col.gameObject.name == "FlareSprite")
+        {
+            GameObject.Find("GameManager").GetComponent<GameManager>().InitiateGameOver();
+        } else
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
