@@ -6,6 +6,7 @@ public class SpawnManager : MonoBehaviour
 {
     public int rounds = 0;
 
+    public GameManager gameManager;
     public GameObject[] heads;
 
     public GameObject[] heads_pattern0_a;
@@ -26,6 +27,9 @@ public class SpawnManager : MonoBehaviour
     public float pattern0_timeout;
     public float pattern0_timeoutDuration;
 
+    public float pattern1_timeout;
+    public float pattern1_timeoutDuration;
+
 
     void Start()
     {
@@ -37,18 +41,28 @@ public class SpawnManager : MonoBehaviour
 
         timeout -= Time.deltaTime;
         pattern0_timeout -= Time.deltaTime;
+        pattern1_timeout -= Time.deltaTime;
 
         if (timeout < 0)
         {
             rounds++;
 
-            if (pattern0_timeout < 0.0f && rounds >= 10)
+            if (pattern1_timeout < 0.0f && rounds >= 10)
+            {
+                Debug.Log("pattern1");
+                GameObject[] randomPattern1 = SelectRndPattern1();
+                DoPattern1(randomPattern1);
+                pattern1_timeout = pattern1_timeoutDuration;
+                timeout = timeoutDuration * 2;
+            }
+            else if (pattern0_timeout < 0.0f && rounds >= 10)
             {
                 Debug.Log("pattern0");
                 GameObject[] randomPattern0 = SelectRndPattern0();
                 DoPattern0(randomPattern0);
                 pattern0_timeout = pattern0_timeoutDuration;
                 timeout = timeoutDuration * 2;
+                
             }
             else
             {
@@ -89,6 +103,14 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
+    void DoPattern0(GameObject[] headz)
+    {
+        DeactivateAll();
+        ActivateWithTimeout(headz[0], 0.3f);
+        ActivateWithTimeout(headz[1], 0.6f);
+        ActivateWithTimeout(headz[2], 0.9f);
+    }
+
     GameObject[] SelectRndPattern1()
     {
         switch (Random.Range(0, 5))
@@ -104,15 +126,18 @@ public class SpawnManager : MonoBehaviour
             default:
                 return heads_pattern1_e;
         }
+
+        //return heads_pattern1_a;
     }
 
-    void DoPattern0(GameObject[] heads)
+    void DoPattern1(GameObject[] headz)
     {
         DeactivateAll();
-        ActivateWithTimeout(heads[0], 0.3f);
-        ActivateWithTimeout(heads[1], 0.6f);
-        ActivateWithTimeout(heads[2], 0.9f);
+        ActivateWithTimeout(headz[0], 0.5f);
+        ActivateWithTimeout(headz[1], 0.5f);
     }
+
+
 
     void DeactivateAll()
     {

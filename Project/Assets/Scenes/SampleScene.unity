@@ -1552,6 +1552,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f694cd2971a94d499a89d09159bba7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rounds: 0
+  gameManager: {fileID: 0}
   heads:
   - {fileID: 1861904822}
   - {fileID: 1823783377}
@@ -1566,7 +1568,7 @@ MonoBehaviour:
   heads_pattern0_a:
   - {fileID: 231214767}
   - {fileID: 655353090}
-  - {fileID: 593598065}
+  - {fileID: 1981127982}
   heads_pattern0_b:
   - {fileID: 593598065}
   - {fileID: 655353090}
@@ -1579,10 +1581,27 @@ MonoBehaviour:
   - {fileID: 1981127982}
   - {fileID: 1654239150}
   - {fileID: 1342466509}
+  heads_pattern1_a:
+  - {fileID: 231214767}
+  - {fileID: 1981127982}
+  heads_pattern1_b:
+  - {fileID: 1861904822}
+  - {fileID: 1981127982}
+  heads_pattern1_c:
+  - {fileID: 1823783377}
+  - {fileID: 122322653}
+  heads_pattern1_d:
+  - {fileID: 655353090}
+  - {fileID: 1574460828}
+  heads_pattern1_e:
+  - {fileID: 593598065}
+  - {fileID: 1342466509}
   timeout: 1
   timeoutDuration: 1
   pattern0_timeout: 0
   pattern0_timeoutDuration: 10
+  pattern1_timeout: 0
+  pattern1_timeoutDuration: 20
 --- !u!1 &1764815699
 GameObject:
   m_ObjectHideFlags: 0

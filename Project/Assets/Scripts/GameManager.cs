@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Q))
         {
-            if (power0_cooldown == 0.0f)
+            if (Power0Ready())
             {
                 if (power1_duration == 0.0f)
                 {
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.W))
         {
-            if (power1_cooldown == 0.0f)
+            if (Power1Ready())
             {
                 otherHand.GetComponent<SpriteRenderer>().enabled = true;
                 otherHand.GetComponent<BoxCollider2D>().enabled = true;
@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.E))
         {
-            if (power2_cooldown == 0.0f)
+            if (Power2Ready())
             {
                 Vector3 newPos = candle.transform.position;
                 newPos.y += 1.0f;
@@ -79,6 +79,21 @@ public class GameManager : MonoBehaviour
             otherHand.GetComponent<SpriteRenderer>().enabled = false;
             otherHand.GetComponent<BoxCollider2D>().enabled = false;
         }
+    }
+
+    public bool Power0Ready()
+    {
+        return power0_cooldown <= 0;
+    }
+
+    public bool Power1Ready()
+    {
+        return power1_cooldown <= 0;
+    }
+
+    public bool Power2Ready()
+    {
+        return power2_cooldown <= 0;
     }
 
     private void SwapHands()
