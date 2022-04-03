@@ -4,12 +4,21 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
+    public int rounds = 0;
+
     public GameObject[] heads;
 
     public GameObject[] heads_pattern0_a;
     public GameObject[] heads_pattern0_b;
     public GameObject[] heads_pattern0_c;
     public GameObject[] heads_pattern0_d;
+
+    public GameObject[] heads_pattern1_a;
+    public GameObject[] heads_pattern1_b;
+    public GameObject[] heads_pattern1_c;
+    public GameObject[] heads_pattern1_d;
+    public GameObject[] heads_pattern1_e;
+
 
     public float timeout;
     public float timeoutDuration;
@@ -31,8 +40,9 @@ public class SpawnManager : MonoBehaviour
 
         if (timeout < 0)
         {
+            rounds++;
 
-            if (pattern0_timeout < 0.0f)
+            if (pattern0_timeout < 0.0f && rounds >= 10)
             {
                 Debug.Log("pattern0");
                 GameObject[] randomPattern0 = SelectRndPattern0();
@@ -46,6 +56,7 @@ public class SpawnManager : MonoBehaviour
                 DoStuff();
                 timeout = timeoutDuration;
             }
+
         }
     }
 
@@ -75,6 +86,23 @@ public class SpawnManager : MonoBehaviour
                 return heads_pattern0_c;
             default:
                 return heads_pattern0_d;
+        }
+    }
+
+    GameObject[] SelectRndPattern1()
+    {
+        switch (Random.Range(0, 5))
+        {
+            case 0:
+                return heads_pattern1_a;
+            case 1:
+                return heads_pattern1_b;
+            case 2:
+                return heads_pattern1_c;
+            case 3:
+                return heads_pattern1_d;
+            default:
+                return heads_pattern1_e;
         }
     }
 
