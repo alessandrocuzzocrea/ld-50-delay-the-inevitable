@@ -34,10 +34,14 @@ public class GameManager : MonoBehaviour
     public GameObject DoubleHands;
     public GameObject RestoreCandle;
 
+    //Audio
+    public AudioSource music;
+
     // Start is called before the first frame update
     void Start()
     {
         Score.SetActive(false);
+        music = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -52,6 +56,7 @@ public class GameManager : MonoBehaviour
                 Title.SetActive(false);
                 //Controls.SetActive(false);
                 Score.SetActive(true);
+                music.Play();
             }
 
             return;
@@ -205,6 +210,8 @@ public class GameManager : MonoBehaviour
 
         PressEnter.gameObject.SetActive(true);
         PressEnter.GetComponent<TMPro.TextMeshProUGUI>().text = "Press Enter to restart";
+
+        music.Stop();
     }
 
     public bool Power0Ready()
